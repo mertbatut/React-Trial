@@ -8,3 +8,6 @@ React-Trial
 
 
      3-Search Butonu aktif. Sayfa içerisindeki veriler ile eşleşme sağlanıyor. Harfleri takip ederek uygun içeriği kullanıcının önüne çıkartıyor. 
+
+
+     4- Order componentleri eklendi. Örnek bir pizza sipariş sayfası oluşturuldu ve seçenekler kullanıldı. Kullanıcı seçenekleri seçtikçe fiyat güncellenmekte.
