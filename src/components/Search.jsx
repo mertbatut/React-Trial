@@ -1,18 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import '../App.css'; 
+const Search = () => {
+  const products = [
+    { id: 1, name: 'Graphic Design', price: 6.48 },
+    { id: 2, name: 'Web Development', price: 10.99 },
+    { id: 3, name: 'Data Science', price: 8.50 },
+  ];
 
-const Search = ({ searchTerm, setSearchTerm, onSearch, results }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
   const handleInputChange = (event) => {
     const value = event.target.value;
     setSearchTerm(value);
-    onSearch(value); // Perform search on every input change
+    onSearch(value); 
   };
 
   const handleSearchClick = () => {
     onSearch(searchTerm);
   };
 
+  const handleSearch = (term) => {
+    if (!term) {
+      setFilteredProducts([]);
+      return;
+    }
+
+    const lowercasedTerm = term.toLowerCase();
+    const filtered = products.filter(product =>
+      product.name.toLowerCase().includes(lowercasedTerm) ||
+      product.price.toString().includes(lowercasedTerm)
+    );
+    setFilteredProducts(filtered);
+  };
+
+  useEffect(() => {
+    handleSearch(searchTerm);
+  }, [searchTerm]);
+
   return (
     <div className="search-component">
+      <h1>Product Search</h1>
       <input
         type="text"
         value={searchTerm}
@@ -23,10 +51,10 @@ const Search = ({ searchTerm, setSearchTerm, onSearch, results }) => {
       <button onClick={handleSearchClick}>Search</button>
       {searchTerm && (
         <ul className="dropdown">
-          {results.length > 0 ? (
-            results.map((result, index) => (
-              <li key={index} className="dropdown-item">
-                {result.name} - ${result.price}
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
+              <li key={product.id} className="dropdown-item">
+                {product.name} - ${product.price}
               </li>
             ))
           ) : (
